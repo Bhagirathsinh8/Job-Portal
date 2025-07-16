@@ -18,6 +18,7 @@ module.exports = {
   models: {
     USER: "User",
     JOB:"Job",
-    COMPANY:"Company"
+    COMPANY:"Company",
+    APPLICATION:"Application"
   },
 };
