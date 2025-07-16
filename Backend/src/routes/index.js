@@ -6,6 +6,7 @@ const router = express.Router();
 const tempRoutes = require('./temp.routes');
 const authRoutes = require('./auth.routes');
 const userRoutes = require('./user.routes');
+const jobRoutes = require('./job.routes');
 
 // Define the base route for user-related operations
 // Example: router.use('/users', userRoutes);
@@ -13,5 +14,6 @@ const userRoutes = require('./user.routes');
 router.use('/temp', tempRoutes);
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
+router.use('/job', jobRoutes);
 
 module.exports = router;
