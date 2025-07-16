@@ -4,7 +4,7 @@ const { status } = require("../../utils/constant");
 
 exports.createJob = async (req, res, next) => {
   try {
-    const job = await jobService.createJob(req.body);
+    const job = await jobService.createJob(req.body,req.user);
     return res
       .status(StatusCodes.CREATED)
       .json({

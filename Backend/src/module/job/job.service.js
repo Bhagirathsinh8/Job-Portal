@@ -2,8 +2,8 @@ const { StatusCodes } = require("http-status-codes");
 const Job = require("../../model/job.model");
 const { AppError } = require("../../utils/errorHandler");
 
-exports.createJob = async (jobData) => {
-  const job = await Job.create(jobData);
+exports.createJob = async (jobData,user) => {
+  const job = await Job.create({...jobData,created_by:user.id});
   if (!job){
       throw new AppError("Job not Created Successfully", StatusCodes.BAD_REQUEST);
   }

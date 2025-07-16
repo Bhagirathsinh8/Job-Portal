@@ -27,6 +27,11 @@ const userSchema = new mongoose.Schema({
         resumeOriginalName:{type:String},
         company:{type:mongoose.Schema.Types.ObjectId ,ref: models.COMPANY},
         profilePhoto:{type:String, default:''}
+    },
+    company_id:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref: models.COMPANY,
+            require:true
     }
 },{timestamps:true});
 
