@@ -3,12 +3,8 @@ const { models, status } =require('../utils/constant');
 
 
 const applicationSchema = new mongoose.Schema({
-    job:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:models.APPLICATION,
-        require:true,
-    },
-    applicant:{
+    jobId: { type: mongoose.Schema.Types.ObjectId, ref: models.JOB, required: true },
+    applicant_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: models.USER,
         require:true,
@@ -17,7 +13,8 @@ const applicationSchema = new mongoose.Schema({
         type:String,
         enum:['pending','accepted','rejected'],
         default:'pending'
-    }
+    },
+    appliedAt: { type: Date, default: Date.now },
 },{timestamps:true});
 
 const Application = mongoose.model(models.APPLICATION,applicationSchema);

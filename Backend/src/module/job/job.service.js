@@ -10,13 +10,44 @@ exports.createJob = async (jobData,user) => {
   return job;
 };
 
-exports.getAllJobs = async () => {
-    const job = await Job.find()
-    // .populate("company")
+exports.getAllJobs = async (query) => {
+  const filter = {};
+
+  // 🔍 Filtering
+  if (query.title) {
+    filter.title = { $regex: query.title, $options: "i" };
+  }
+  if (query.location) {
+    filter.location = { $regex: query.location, $options: "i" };
+  }
+  if (query.type) {
+    filter.type = query.type; 
+  }
+  if (query.minSalary && query.maxSalary) {
+    filter.salary = { $gte: query.minSalary, $lte: query.maxSalary };
+  }
+
+  // ↕️ Sorting
+  let sort = {};
+  if (query.sortBy) {
+    const sortField = query.sortBy; // e.g., "createdAt"
+    const sortOrder = query.order === "desc" ? -1 : 1; // default: ascending
+    sort[sortField] = sortOrder;
+  } else {
+    sort = { createdAt: -1 }; // default sorting by newest jobs
+  }
+
+  // 📦 Fetch Jobs
+  const jobs = await Job.find(filter)
+    .sort(sort)
+    .populate("company")
     .populate("created_by")
-    .populate("applications");
-  return job;
+    .populate("applications")
+    .lean();
+    
+  return jobs;
 };
+
 
 exports.getJobById = async (id) => {
   const job = await Job.findById(id)
