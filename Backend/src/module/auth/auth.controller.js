@@ -12,7 +12,7 @@ exports.welcome = async (req, res) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    const user = await authService.signupService(req.body);
+    const user = await authService.signupService(req.body,req.file);
     return res.status(StatusCodes.CREATED).json({
       status: status.ONE,
       message: "User Signup Successfully",

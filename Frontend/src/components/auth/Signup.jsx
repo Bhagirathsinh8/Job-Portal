@@ -20,6 +20,7 @@ function Signup() {
     file: null,
   });
   const navigate = useNavigate();
+
   const changeEventHandler = (e) => {
   setInput({ ...input, [e.target.name]: e.target.value });
 };
@@ -28,18 +29,30 @@ function Signup() {
     setInput({ ...input, file: e.target.files?.[0] });
   };
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   console.log(input);
-  // };
-
-
 const submitHandler = async (e) => {
   e.preventDefault();
+   
   try {
-    const res = await axios.post(ROUTES.SIGNUP_ENDPOINT, input);
-    console.log(res);
-    console.log(input);
+     const formData = new FormData();
+
+    // Append all fields to FormData
+    formData.append("name", input.name);
+    formData.append("email", input.email);
+    formData.append("phone", input.phone);
+    formData.append("password", input.password);
+    formData.append("role", input.role);
+
+    // Append file if it exists
+    if (input.file) {
+      formData.append("file", input.file);
+    }
+
+    // Send request to backend
+    const res = await axios.post(ROUTES.SIGNUP_ENDPOINT, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     console.log("Signup Success:", res.data);
 
