@@ -8,45 +8,60 @@ import { RadioGroup } from "../ui/radio-group";
 import axios from "axios";
 import { ROUTES } from "@/utils/constant";
 import { toast } from "sonner";
-
+import { useDispatch, useSelector } from "react-redux";
+import { loginStart, loginSuccess, setLoading, } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 function Login() {
   const [input, setInput] = useState({
-    email: "bhagirathnakum19@gmail.com",
-    password: "bn123456",
+    email: "student1@gmail.com",
+    password: "test@123",
     role: "",
   });
-
+  const {loading} = useSelector((store)=>store.auth)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
- const submitHandler = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.post(ROUTES.LOGIN_ENDPOINT, input);
-    const token = res.data.data.token;
-    const user = res.data.data.user;
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(setLoading(true));
+      dispatch(loginStart());
+      const res = await axios.post(ROUTES.LOGIN_ENDPOINT, input);
+      const token = res.data.data.token;
+      const user = res.data.data.user;
+      dispatch(loginSuccess(user)); 
 
-    if(res.data.success){
-      localStorage.setItem('token',token);
-      localStorage.setItem('user',JSON.stringify(user));
-      toast.success("Login Successfully");
-      navigate('/')
+      if (res.data.success) {
+        localStorage.setItem("token", token);
+        // localStorage.setItem("user", JSON.stringify(user));
+        toast.success("Login Successfully");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(
+        "Signup Error:",
+        error.response?.data?.message || error.message
+      );
+      toast.error(error.response?.data?.message || error.message);
+      console.log(error);
+    } finally {
+      dispatch(setLoading(false));
     }
-  } catch (error) {
-    console.error("Signup Error:", error.response?.data?.message || error.message);
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
+  };
 
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
-        <form className="w-1/2 border border-gray-600 rounded-md p-4 my-10" onSubmit={submitHandler}>
+        <form
+          className="w-1/2 border border-gray-600 rounded-md p-4 my-10"
+          onSubmit={submitHandler}
+        >
           <h1 className="font-bold text-xl mb-5">Login</h1>
           <div className="my-2">
             <Label>Email</Label>
@@ -72,7 +87,7 @@ function Login() {
             <div className="flex items-center space-x-2">
               <Input
                 type={"radio"}
-                name ={"role"}
+                name={"role"}
                 value="student"
                 checked={input.role === "student"}
                 onChange={changeEventHandler}
@@ -92,7 +107,10 @@ function Login() {
               <Label htmlFor="r2">Recuiter</Label>
             </div>
           </RadioGroup>
-          <Button type="submit">Login</Button>
+          {
+            loading ? <Button className={'w-full my-4'}> <Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please Wait</Button> :<Button type="submit" className={'w-full my-4'}>Login</Button>
+          }
+          
           <span className="flex items-center gap-4 my-2">
             Dont't have an Account?{" "}
             <Link to={"/signup"} className="text-blue-600">
