@@ -22,21 +22,17 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.loading = false;
       state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload)); // Save user
-
-    },
-    loginFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload)); // Save user from API responce
     },
     logout: (state) => {
       state.user = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       toast.success("Logout Successfully");
+      
     },
   },
 });
 
-export const { setLoading ,loginStart,loginFail,loginSuccess,logout} = authSlice.actions;
+export const { setLoading ,loginStart,loginSuccess,logout} = authSlice.actions;
 export default authSlice.reducer;
