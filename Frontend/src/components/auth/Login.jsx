@@ -5,12 +5,13 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { RadioGroup } from "../ui/radio-group";
-import axios from "axios";
+// import axios from "axios";
 import { ROUTES } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, setLoading, } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
+import { login } from "@/api/authApi";
 
 function Login() {
   const [input, setInput] = useState({
@@ -31,7 +32,8 @@ function Login() {
     try {
       dispatch(setLoading(true));
       dispatch(loginStart());
-      const res = await axios.post(ROUTES.LOGIN_ENDPOINT, input);
+      // const res = await axios.post(ROUTES.LOGIN_ENDPOINT, input);
+      const res = await login(input);
       const token = res.data.data.token;
       const user = res.data.data.user;
       dispatch(loginSuccess(user)); 
