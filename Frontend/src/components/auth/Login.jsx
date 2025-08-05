@@ -4,7 +4,6 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { RadioGroup } from "../ui/radio-group";
 // import axios from "axios";
 import { ROUTES } from "@/utils/constant";
 import { toast } from "sonner";
@@ -55,85 +54,184 @@ function Login() {
       dispatch(setLoading(false));
     }
   };
+return (
+  <div>
+    <Navbar />
+    <div className="flex items-center justify-center px-4 min-h-screen">
+      <form
+        className="w-full max-w-md border border-gray-300 rounded-md p-6 my-10 bg-white"
+        onSubmit={submitHandler}
+      >
+        <h1 className="font-bold text-2xl mb-6 text-center">Login</h1>
 
-  return (
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
-        <form
-          className="w-1/2 border border-gray-600 rounded-md p-4 my-10"
-          onSubmit={submitHandler}
-        >
-          <h1 className="font-bold text-xl mb-5">Login</h1>
-          <div className="my-2">
-            <Label>Email</Label>
-            <Input
-              type="email"
-              placeholder="nakum@gmail.com"
-              value={input.email}
-              name="email"
+        {/* Email Field */}
+        <div className="mb-4">
+          <Label>Email</Label>
+          <Input
+            type="email"
+            placeholder="nakum@gmail.com"
+            value={input.email}
+            name="email"
+            onChange={changeEventHandler}
+          />
+        </div>
+
+        {/* Password Field */}
+        <div className="mb-4">
+          <Label>Password</Label>
+          <Input
+            type="password"
+            placeholder="password"
+            value={input.password}
+            name="password"
+            onChange={changeEventHandler}
+          />
+        </div>
+
+        {/* Role Selection */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 my-5">
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="role"
+              value="student"
+              checked={input.role === "student"}
               onChange={changeEventHandler}
+              className="cursor-pointer w-4 h-4"
+              id="r1"
             />
+            <Label htmlFor="r1">Student</Label>
           </div>
-          <div className="my-2">
-            <Label>Password</Label>
-            <Input
-              type="password"
-              placeholder="password"
-              value={input.password}
-              name="password"
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="role"
+              value="recuiter"
+              checked={input.role === "recuiter"}
               onChange={changeEventHandler}
+              className="cursor-pointer w-4 h-4"
+              id="r2"
             />
+            <Label htmlFor="r2">Recruiter</Label>
           </div>
-          <RadioGroup className={"flex items-center gap-4 my-5"}>
-            <div className="flex items-center space-x-2">
-              <Input
-                type={"radio"}
-                name={"role"}
-                value="student"
-                checked={input.role === "student"}
-                onChange={changeEventHandler}
-                className={"cursor-pointer"}
-              />
-              <Label htmlFor="r1">Student</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Input
-                type={"radio"}
-                name="role"
-                value="recuiter"
-                checked={input.role === "recuiter"}
-                onChange={changeEventHandler}
-                className={"cursor-pointer"}
-              />
-              <Label htmlFor="r2">Recuiter</Label>
-            </div><br/>
-            <div className="flex items-center space-x-2">
-              <Input
-                type={"radio"}
-                name="role"
-                value="admin"
-                checked={input.role === "admin"}
-                onChange={changeEventHandler}
-                className={"cursor-pointer"}
-              />
-              <Label htmlFor="r3">Admin</Label>
-            </div>
-          </RadioGroup>
-          {
-            loading ? <Button className={'w-full my-4'}> <Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please Wait</Button> :<Button type="submit" className={'w-full my-4'}>Login</Button>
-          }
-          
-          <span className="flex items-center gap-4 my-2">
-            Dont't have an Account?{" "}
-            <Link to={"/signup"} className="text-blue-600">
-              Signup here!
-            </Link>
-          </span>
-        </form>
-      </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="role"
+              value="admin"
+              checked={input.role === "admin"}
+              onChange={changeEventHandler}
+              className="cursor-pointer w-4 h-4"
+              id="r3"
+            />
+            <Label htmlFor="r3">Admin</Label>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        {loading ? (
+          <Button className="w-full my-4" disabled>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Please Wait
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full my-4">
+            Login
+          </Button>
+        )}
+
+        {/* Signup Link */}
+        <p className="text-center mt-4 text-sm">
+          Don’t have an account?{" "}
+          <Link to="/signup" className="text-blue-600 font-medium">
+            Signup here!
+          </Link>
+        </p>
+      </form>
     </div>
-  );
+  </div>
+);
+
+  // return (
+  //   <div>
+  //     <Navbar />
+  //     <div className="flex items-center justify-center max-w-7xl mx-auto">
+  //       <form
+  //         className="w-1/2 border border-gray-600 rounded-md p-4 my-10"
+  //         onSubmit={submitHandler}
+  //       >
+  //         <h1 className="font-bold text-xl mb-5">Login</h1>
+  //         <div className="my-2">
+  //           <Label>Email</Label>
+  //           <Input
+  //             type="email"
+  //             placeholder="nakum@gmail.com"
+  //             value={input.email}
+  //             name="email"
+  //             onChange={changeEventHandler}
+  //           />
+  //         </div>
+  //         <div className="my-2">
+  //           <Label>Password</Label>
+  //           <Input
+  //             type="password"
+  //             placeholder="password"
+  //             value={input.password}
+  //             name="password"
+  //             onChange={changeEventHandler}
+  //           />
+  //         </div>
+  //         <RadioGroup className={"flex items-center gap-4 my-5"}>
+  //           <div className="flex items-center space-x-2">
+  //             <Input
+  //               type={"radio"}
+  //               name={"role"}
+  //               value="student"
+  //               checked={input.role === "student"}
+  //               onChange={changeEventHandler}
+  //               className={"cursor-pointer"}
+  //             />
+  //             <Label htmlFor="r1">Student</Label>
+  //           </div>
+  //           <div className="flex items-center space-x-2">
+  //             <Input
+  //               type={"radio"}
+  //               name="role"
+  //               value="recuiter"
+  //               checked={input.role === "recuiter"}
+  //               onChange={changeEventHandler}
+  //               className={"cursor-pointer"}
+  //             />
+  //             <Label htmlFor="r2">Recuiter</Label>
+  //           </div><br/>
+  //           <div className="flex items-center space-x-2">
+  //             <Input
+  //               type={"radio"}
+  //               name="role"
+  //               value="admin"
+  //               checked={input.role === "admin"}
+  //               onChange={changeEventHandler}
+  //               className={"cursor-pointer"}
+  //             />
+  //             <Label htmlFor="r3">Admin</Label>
+  //           </div>
+  //         </RadioGroup>
+  //         {
+  //           loading ? <Button className={'w-full my-4'}> <Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please Wait</Button> :<Button type="submit" className={'w-full my-4'}>Login</Button>
+  //         }
+          
+  //         <span className="flex items-center gap-4 my-2">
+  //           Dont't have an Account?{" "}
+  //           <Link to={"/signup"} className="text-blue-600">
+  //             Signup here!
+  //           </Link>
+  //         </span>
+  //       </form>
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default Login;

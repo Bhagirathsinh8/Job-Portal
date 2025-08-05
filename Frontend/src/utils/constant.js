@@ -1,5 +1,6 @@
-const BASE_API_URL = "http://localhost:5000/api";
+// const BASE_API_URL = "http://localhost:5000/api";
 // const BASE_API_URL = "https://tksf97sz-5000.inc1.devtunnels.ms/api";
+const BASE_API_URL = "https://job-portal-mrlu.onrender.com/api";
 
 export const ROUTES = {
   BASE: BASE_API_URL,
