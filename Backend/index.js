@@ -41,6 +41,9 @@ app.get('/', (req, res) => {
 if (process.env.VERCEL) {
   // Vercel will import and use the exported handler
   module.exports = { handler: serverless(app) };
+  console.log("Running in Vercel?", process.env.VERCEL);
+console.log("Exporting handler...");
+
 } else {
   // Local development
   const PORT = serverConfig.PORT || 5000;
