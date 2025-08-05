@@ -3,7 +3,6 @@ require('dotenv').config({ quiet: true });
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const serverless = require('serverless-http');
 
 
 const {serverConfig} = require('./src/utils/constant');
@@ -34,20 +33,7 @@ app.get('/', (req, res) => {
     res.send('Job Portal server is running');
     });
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
-if (process.env.VERCEL) {
-  // Vercel will import and use the exported handler
-  module.exports = { handler: serverless(app) };
-  console.log("Running in Vercel?", process.env.VERCEL);
-console.log("Exporting handler...");
-
-} else {
-  // Local development
-  const PORT = serverConfig.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
-}
