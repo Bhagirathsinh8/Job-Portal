@@ -3,6 +3,8 @@ require('dotenv').config({ quiet: true });
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const serverless = require('serverless-http');
+
 
 const {serverConfig} = require('./src/utils/constant');
 const ConnectDB = require('./src/config/db.config');
