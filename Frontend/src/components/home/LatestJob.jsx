@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import LatestJobCard from './LatestJobCard';
+import { useSelector } from 'react-redux';
 
-const job = [1, 2, 3, 4, 5, 6,7,8];
+// const job = [1, 2, 3, 4, 5, 6,7,8];
 
 function LatestJob() {
+      const {allJob} = useSelector((store)=>store.jobs)
       const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
@@ -34,9 +36,12 @@ function LatestJob() {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-8">
-        {job.slice(0, visibleCount).map((item, index) => (
-          <LatestJobCard key={index} job={item} />
-        ))}
+        {
+          allJob.length <= 0 ? <span>No Jobs Availabe</span> :
+        allJob.slice(0, visibleCount).map((job) => (
+          <LatestJobCard key={job._id} job={job} />
+        ))
+        }
       </div>
     </div>
   );

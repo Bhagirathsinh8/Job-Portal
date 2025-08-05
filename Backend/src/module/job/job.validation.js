@@ -1,4 +1,4 @@
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 const { validateRequest, validateRequestID } = require('../../utils/errorHandler');
 
 exports.createJobValidator = [
@@ -9,12 +9,12 @@ exports.createJobValidator = [
     body('location').notEmpty().withMessage('Location is required'),
     body('jobType').notEmpty().withMessage('Job Type is required'),
     body('position').isInt({ min: 1 }).withMessage('Position must be a positive integer'),
-    body('company').isMongoId().withMessage('Invalid company ID'),
+    // body('company').isMongoId().withMessage('Invalid company ID'),
     validateRequest,
 ];
 
 exports.idValidation = [
-    body('id').isMongoId().withMessage("Invalid Job Id"),
+    param('id').isMongoId().withMessage("Invalid Job Id"),
     validateRequestID
 ]
 

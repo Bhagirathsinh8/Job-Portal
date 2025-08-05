@@ -26,8 +26,8 @@ function FilterCard() {
   };
 
   return (
-    <div>
-      <h1 className="font-bold mb-2">Job Filter</h1>
+    <div className="p-5">
+      <h1 className="font-bold mx-auto  mb-2">Job Filter</h1>
       {filterData.map((item, index) => {
         return (
           <div key={index}>

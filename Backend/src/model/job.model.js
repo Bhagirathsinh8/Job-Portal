@@ -33,7 +33,7 @@ const jobSchema = mongoose.Schema({
     company:{
         type:mongoose.Schema.Types.ObjectId,
         ref: models.COMPANY,
-        require:true
+        // require:true
     },
     created_by:{
         type:mongoose.Schema.Types.ObjectId,
@@ -42,7 +42,7 @@ const jobSchema = mongoose.Schema({
     },
     applications:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref: models.USER,
+        ref: models.APPLICATION,
     }]
 },{timestamps:true});
 

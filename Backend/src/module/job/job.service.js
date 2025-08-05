@@ -1,14 +1,28 @@
 const { StatusCodes } = require("http-status-codes");
 const Job = require("../../model/job.model");
+const Company = require("../../model/company.model");
 const { AppError } = require("../../utils/errorHandler");
 
-exports.createJob = async (jobData,user) => {
-  const job = await Job.create({...jobData,created_by:user.id});
-  if (!job){
-      throw new AppError("Job not Created Successfully", StatusCodes.BAD_REQUEST);
+
+exports.createJob = async (jobData, user) => {
+
+  const company = await Company.findOne({ ownerId: user.id });
+  if (!company) {
+    throw new AppError("No company found for this user", StatusCodes.NOT_FOUND);
   }
+  const job = await Job.create({
+    ...jobData,
+    company: company._id, // set company from user's ownership
+    created_by: user.id,
+  });
+
+  if (!job) {
+    throw new AppError("Job not Created Successfully", StatusCodes.BAD_REQUEST);
+  }
+
   return job;
 };
+
 
 exports.getAllJobs = async (query) => {
   const filter = {};
@@ -21,7 +35,7 @@ exports.getAllJobs = async (query) => {
     filter.location = { $regex: query.location, $options: "i" };
   }
   if (query.type) {
-    filter.type = query.type; 
+    filter.type = query.type;
   }
   if (query.minSalary && query.maxSalary) {
     filter.salary = { $gte: query.minSalary, $lte: query.maxSalary };
@@ -44,33 +58,43 @@ exports.getAllJobs = async (query) => {
     .populate("created_by")
     .populate("applications")
     .lean();
-    
+
   return jobs;
 };
-
 
 exports.getJobById = async (id) => {
   const job = await Job.findById(id)
     .populate("company")
     .populate("created_by")
     .populate("applications");
-  if (!job) throw new AppError("Job not found",StatusCodes.NOT_FOUND);
+  if (!job) throw new AppError("Job not found", StatusCodes.NOT_FOUND);
   return job;
 };
 
 exports.updateJob = async (id, jobData) => {
   const job = await Job.findByIdAndUpdate(id, jobData, { new: true });
-  if (!job) throw new AppError("Job not found",StatusCodes.NOT_FOUND);
+  if (!job) throw new AppError("Job not found", StatusCodes.NOT_FOUND);
   return job;
 };
 
 exports.deleteJob = async (id) => {
-  const job = await Job.findById(id);
-  console.log(job);
+  const job = await Job.findByIdAndDelete(id);
   if (!job) {
-    throw new AppError("Job not found or already deleted", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "Job not found or already deleted",
+      StatusCodes.NOT_FOUND
+    );
   }
 
-  await job.deleteOne();
   return;
+};
+
+exports.getJobsByRecruiter = async (recruiterId) => {
+  const job = await Job.find({ created_by: recruiterId })
+    .sort({ createdAt: -1 })
+    .populate("company")
+    .populate("created_by")
+    .populate("applications")
+    .lean();
+  return job;
 };

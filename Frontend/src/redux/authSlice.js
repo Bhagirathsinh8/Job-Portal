@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
 
 const userFromStorage = JSON.parse(localStorage.getItem("user"));
 
@@ -28,11 +27,9 @@ const authSlice = createSlice({
       state.user = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      toast.success("Logout Successfully");
-      
-    },
+    }
   },
 });
 
-export const { setLoading ,loginStart,loginSuccess,logout} = authSlice.actions;
+export const { setLoading ,loginStart,loginSuccess,logout,updateUser} = authSlice.actions;
 export default authSlice.reducer;

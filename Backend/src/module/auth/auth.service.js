@@ -7,34 +7,6 @@ const { serverConfig } = require("../../utils/constant");
 const cloudinary = require("../../utils/cloudinary");
 const streamifier = require("streamifier");
 
-//Signup User
-// exports.signupService = async (data, file) => {
-//   const { name, email, phone, role, password } = data;
-//   const userExists = await User.findOne({ $or: [{ email }, { phone }] });
-//   if (userExists) {
-//     if (userExists.email === email) {
-//       throw new AppError("Email is already registered", StatusCodes.CONFLICT);
-//     } else if (userExists.phone === phone) {
-//       throw new AppError(
-//         "Phone number is already registered",
-//         StatusCodes.CONFLICT
-//       );
-//     } else {
-//       throw new AppError("User already exists", StatusCodes.CONFLICT);
-//     }
-//   }
-//   const newUser = new User({ name, email, phone, role, password, 
-//     // profile: {
-//     //   profilePhoto: file?.filename || "", 
-//     //   skills: [], 
-//     // },
-//   });
-//   const user = await newUser.save();
-//   return user;
-// };
-
-
-
 exports.signupService = async (data, file) => {
   const { name, email, phone, role, password } = data;
 
@@ -57,11 +29,13 @@ exports.signupService = async (data, file) => {
   if (file) {
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { 
+        {
           folder: "profiles",
-          public_id: `${Date.now()}-${data.name}-${file.originalname.split('.')[0]}`,
+          public_id: `${Date.now()}-${data.name}-${
+            file.originalname.split(".")[0]
+          }`,
           resource_type: "image",
-         },
+        },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
@@ -81,6 +55,10 @@ exports.signupService = async (data, file) => {
     profile: {
       profilePhoto: profileUrl,
       skills: [],
+      bio: "",
+      resume: "",
+      resumeOriginalName: "",
+      // company:{type:mongoose.Schema.Types.ObjectId ,ref: models.COMPANY},
     },
   });
 

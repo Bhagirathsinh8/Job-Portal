@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     role:{ type: String, enum: ['student', 'recuiter', 'admin'], default: 'student' ,require:true},
     profile:{
         bio:{type:String},
-        skills:[{type:String}],
+        skills:[{type:String ,default:[]}],
         resume:{type:String},
         resumeOriginalName:{type:String},
         company:{type:mongoose.Schema.Types.ObjectId ,ref: models.COMPANY},

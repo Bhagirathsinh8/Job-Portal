@@ -39,7 +39,7 @@ exports.login = async (req, res, next) => {
     // use logout route and unset
     // res.clearCookie('token'); // Clear the 'token' cookie
 
-    return res.status(StatusCodes.CREATED).json({
+    return res.status(StatusCodes.OK).json({
       status: status.ONE,
       success: status.TRUE,
       message: "User Login Successfully",

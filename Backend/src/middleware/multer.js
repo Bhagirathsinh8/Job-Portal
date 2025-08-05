@@ -22,6 +22,7 @@ if (!fs.existsSync(uploadPath)) {
 // });
 
 // Use memory storage for direct upload to Cloudinary
+
 const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
@@ -29,7 +30,4 @@ const singleUpload = multer({storage}).single('file');
 
 module.exports = {upload,singleUpload};
 
-
-
-// const storage = multer.memoryStorage();
 

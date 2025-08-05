@@ -7,6 +7,7 @@ const { verifyToken, roleMiddleware } = require('../middleware/auth.middleware')
 
 // Get all jobs
 router.get('/', Controller.getAllJobs);
+router.get("/recruiter/my-jobs",verifyToken,roleMiddleware(['recuiter']), Controller.getRecruiterJobs);
 
 // Get job by ID
 router.get('/:id',Validator.idValidation, Controller.getJobById);

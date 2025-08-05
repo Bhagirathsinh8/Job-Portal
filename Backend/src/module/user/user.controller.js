@@ -17,9 +17,10 @@ exports.getProfile = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const user = await userService.updateProfile(req.user.id, req.body);
+    const user = await userService.updateProfile(req.user.id, req.body,req.file);
     res.status(StatusCodes.OK).json({
       status: status.ONE,
+      success: status.TRUE,
       message: "Profile updated successfully",
       data: user
     });

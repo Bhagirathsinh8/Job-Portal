@@ -15,8 +15,8 @@ import { login } from "@/api/authApi";
 
 function Login() {
   const [input, setInput] = useState({
-    email: "student1@gmail.com",
-    password: "test@123",
+    email: "",
+    password: "",
     role: "",
   });
   const {loading} = useSelector((store)=>store.auth)
@@ -32,7 +32,7 @@ function Login() {
     try {
       dispatch(setLoading(true));
       dispatch(loginStart());
-      // const res = await axios.post(ROUTES.LOGIN_ENDPOINT, input);
+
       const res = await login(input);
       const token = res.data.data.token;
       const user = res.data.data.user;
@@ -41,7 +41,7 @@ function Login() {
       if (res.data.success) {
         localStorage.setItem("token", token);
         // localStorage.setItem("user", JSON.stringify(user));
-        toast.success("Login Successfully");
+        toast.success(`Login Successfully ${user.name}` );
         navigate("/");
       }
     } catch (error) {

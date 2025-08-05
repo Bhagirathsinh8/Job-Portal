@@ -1,6 +1,12 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 const category = [
   "Frontend Developer",
@@ -22,7 +28,7 @@ const category = [
   "IT Support Specialist",
   "Systems Administrator",
   "Business Analyst",
-  "Database Administrator"
+  "Database Administrator",
 ];
 
 function CategoryCarosel() {
@@ -32,15 +38,21 @@ function CategoryCarosel() {
         <CarouselContent>
           {category.map((cat, index) => {
             return (
-              // <CarouselItem key={index} className={"md:basis-1/2 lg:basis-1/3"}>
-              <CarouselItem key={index} className={"basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 flex justify-center"}>
-                <Button className={"rounded-full"} variant={"outline"}>{cat}</Button>
+              <CarouselItem
+                key={index}
+                className={
+                  "basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 flex justify-center"
+                }
+              >
+                <Button className={"rounded-full"} variant={"outline"}>
+                  {cat}
+                </Button>
               </CarouselItem>
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className={"bg-black text-white "}/> 
-         <CarouselNext className={"bg-black text-white "}/>
+        <CarouselPrevious className="hidden md:flex bg-black text-white" />
+        <CarouselNext className="hidden md:flex bg-black text-white" />
       </Carousel>
     </div>
   );

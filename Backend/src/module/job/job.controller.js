@@ -9,6 +9,7 @@ exports.createJob = async (req, res, next) => {
       .status(StatusCodes.CREATED)
       .json({
         status: status.ONE,
+        success:status.TRUE,
         message: "Job created successfully",
         data: job,
       });
@@ -24,6 +25,7 @@ exports.getAllJobs = async (req, res, next) => {
       .status(StatusCodes.OK)
       .json({
         status: status.ONE,
+        success:status.TRUE,
         message: "Job Fetch successfully",
         data: jobs,
       });
@@ -39,6 +41,7 @@ exports.getJobById = async (req, res, next) => {
       .status(StatusCodes.OK)
       .json({
         status: status.ONE,
+        success: status.TRUE,
         message: "Job Fetch successfully",
         data: job,
       });
@@ -70,7 +73,24 @@ exports.deleteJob = async (req, res, next) => {
    
     return res
       .status(StatusCodes.OK)
-      .json({ status: status.ONE, message: "Job deleted successfully"});
+      .json({ status: status.ONE,success:status.TRUE,message: "Job deleted successfully"});
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+exports.getRecruiterJobs = async (req, res, next) => {
+  try {
+    const user = req.user.id
+    const jobs = await jobService.getJobsByRecruiter(user);
+    res.status(StatusCodes.OK).json({
+      status: status.ONE,
+      success:status.TRUE,
+      message: "Jobs fetched successfully",
+      data: jobs,
+    });
   } catch (error) {
     next(error);
   }

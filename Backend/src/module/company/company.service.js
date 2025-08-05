@@ -2,6 +2,10 @@ const { StatusCodes } = require('http-status-codes');
 const Company = require('../../model/company.model');
 const User = require('../../model/user.model');
 const { AppError } = require('../../utils/errorHandler');
+const cloudinary = require("cloudinary").v2;
+const streamifier = require("streamifier");
+
+
 
 //Get All Companies List
 
@@ -50,12 +54,36 @@ exports.createCompany = async (data,user) => {
   return await company.save();
 };
 
-//Update Company
-exports.updateCompany = async (id, data) => {
+
+exports.updateCompany = async (id, data, file) => {
+  if (file) {
+    const streamUpload = () => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "logos" },
+          (error, result) => {
+            if (result) resolve(result);
+            else reject(error);
+          }
+        );
+        streamifier.createReadStream(file.buffer).pipe(stream);
+      });
+    };
+
+    const uploadResult = await streamUpload();
+    data.logo = uploadResult.secure_url;
+  }
+
   const updated = await Company.findByIdAndUpdate(id, data, { new: true });
-  if (!updated) throw new AppError('Company not found', StatusCodes.NOT_FOUND);
+
+  if (!updated) {
+    throw new AppError("Company not found", StatusCodes.NOT_FOUND);
+  }
+
   return updated;
 };
+
+
 
 //Delete Company
 exports.deleteCompany = async (id) => {
