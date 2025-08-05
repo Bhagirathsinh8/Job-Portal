@@ -20,36 +20,35 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/utils/constant";
 
 function CompaniesTable() {
-  const { allCompany,searchCompanybyText } = useSelector((store) => store.company);
+  const { allCompany, searchCompanybyText } = useSelector(
+    (store) => store.company
+  );
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [openPopoverId, setOpenPopoverId] = useState(null);
-  const [filterCompany,SetFilterCompany] = useState(allCompany)
+  const [filterCompany, SetFilterCompany] = useState(allCompany);
+  
+  useEffect(() => {
+    if (!searchCompanybyText) {
+      SetFilterCompany(allCompany);
+    } else {
+      const filtered = allCompany.filter((company) =>
+        company?.name?.toLowerCase().includes(searchCompanybyText.toLowerCase())
+      );
+      SetFilterCompany(filtered);
+    }
+  }, [allCompany, searchCompanybyText]);
 
-  useEffect(()=>{
-    const filterCompany = allCompany.length > 0 && allCompany.filter((company)=>{
-      if(!searchCompanybyText){
-        SetFilterCompany(allCompany);
-        return true;
-      };
-      return company?.name?.toLowerCase().includes(searchCompanybyText.toLowerCase())
-    });
-    SetFilterCompany(filterCompany) 
-  },[allCompany,searchCompanybyText])
-
-//Delete Company Function
+  //Delete Company Function
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(
-       ROUTES.DELETE_COMPANY(id),
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.delete(ROUTES.DELETE_COMPANY(id), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.data.success) {
         toast.success("Company deleted successfully");
         dispatch(removeCompanyById(id));
@@ -98,7 +97,6 @@ function CompaniesTable() {
                         alt={item.name}
                       />
                     </Avatar>
-                   
                   </TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.location}</TableCell>
