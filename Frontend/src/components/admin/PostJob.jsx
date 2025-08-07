@@ -42,7 +42,6 @@ const PostJob = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            console.log(input);
             setLoading(true);
             const res = await axios.post(ROUTES.POST_JOB, input,{
                 headers:{

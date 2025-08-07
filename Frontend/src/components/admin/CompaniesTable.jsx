@@ -76,7 +76,7 @@ function CompaniesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allCompany.length <= 0 ? (
+          {allCompany.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5}>
                 <div className="flex items-center justify-center h-20">
@@ -99,8 +99,8 @@ function CompaniesTable() {
                     </Avatar>
                   </TableCell>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.location}</TableCell>
-                  <TableCell>{item.createdAt.replace(/T.*/, "")}</TableCell>
+                  <TableCell>{item.location || "N/A" }</TableCell>
+                  <TableCell>{item.createdAt?.split("T")[0] || "N/A"}</TableCell>
                   <TableCell className="text-right cursor-pointer">
                     <Popover
                       open={openPopoverId === item._id}

@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "@/redux/jobSlice";
 import { toast } from "sonner";
+import { ROUTES } from "@/utils/constant";
 
 function JobDescription() {
   const params = useParams();
@@ -27,7 +28,7 @@ function JobDescription() {
   const applyJobHandler = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/applications/post",
+        ROUTES.APPLY_JOB,
         {
           jobId: jobId,
         },
@@ -59,7 +60,7 @@ function JobDescription() {
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/job/${jobId}`);
+        const res = await axios.get(ROUTES.GET_JOB_ID(jobId));
         console.log(res.data.data);
         if (res.data.success) {
           dispatch(setSingleJob(res.data.data));

@@ -18,7 +18,6 @@ function CompanyCreate() {
     name: "",
   });
   const token = localStorage.getItem("token");
-
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
