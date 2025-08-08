@@ -71,8 +71,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { io } from "socket.io-client";
 import { addNewJob } from "@/redux/jobSlice";
 
-
-const socket = io(import.meta.env.VITE_API_URL || "http://localhost:5000"); // adjust as needed
+const serverHost = "https://job-portal-mrlu.onrender.com/"
+const socket = io( serverHost || "http://localhost:5000"); // adjust as needed
 
 function Jobs() {
   const dispatch = useDispatch();
