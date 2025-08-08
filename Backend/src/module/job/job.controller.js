@@ -5,6 +5,11 @@ const { status } = require("../../utils/constant");
 exports.createJob = async (req, res, next) => {
   try {
     const job = await jobService.createJob(req.body,req.user);
+
+     // ✅ Emit job-added event via Socket.IO
+    const io = req.app.get('io');
+    io.emit('job-added', job); // Broadcast to all connected clients
+    
     return res
       .status(StatusCodes.CREATED)
       .json({

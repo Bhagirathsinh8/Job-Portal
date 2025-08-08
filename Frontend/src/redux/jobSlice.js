@@ -26,8 +26,12 @@ const jobSlice = createSlice({
         (job) => job._id !== action.payload
       );
     },
+      // ✅ Add this reducer
+    addNewJob(state, action) {
+      state.allJob = [action.payload, ...state.allJob];
+    },
     }
 });
 
-export const {setAllJobs,setSingleJob,setAllAdminJobs,setSearchJobsbyText,removeJobById} = jobSlice.actions;
+export const {setAllJobs,setSingleJob,setAllAdminJobs,setSearchJobsbyText,removeJobById,addNewJob} = jobSlice.actions;
 export default jobSlice.reducer;
