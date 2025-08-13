@@ -13,6 +13,7 @@ import { CircleArrowRight, MoreHorizontal, X } from "lucide-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
+import { ROUTES } from "@/utils/constant";
 
 const shortListingStatus = ["accepted", "rejected"];
 
@@ -23,7 +24,7 @@ const ApplicantTable = () => {
   const statusHandler = async (status, id) => {
     try {
       const res = await axios.patch(
-        `http://localhost:5000/api/applications/${id}/status`,
+        ROUTES.UPDATE_APPLICATION_STATUS(id),
         { status },
         {
           headers: {
