@@ -1,5 +1,6 @@
 // src/routes/AppRoutes.jsx
 import AdminJobs from "@/components/admin/AdminJobs";
+import Applicant from "@/components/admin/Applicant";
 import Companies from "@/components/admin/Companies";
 import CompanyCreate from "@/components/admin/CompanyCreate";
 import CompanySetup from "@/components/admin/CompanySetup";
@@ -70,6 +71,10 @@ const appRouter = createBrowserRouter([
     path: PATH.POST_JOB,
     element: <PostJob/>,
   },
+  {
+    path: "/admin/job/:id/applicant",
+    element: <Applicant/>,
+  }
 ]);
 
 export default appRouter;

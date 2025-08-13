@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
+import Footer from "../home/Footer";
 
 
 function Signup() {
@@ -287,6 +288,7 @@ return (
         </span>
       </form>
     </div>
+    <Footer/>
   </div>
 );
 

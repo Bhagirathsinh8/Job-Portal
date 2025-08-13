@@ -31,7 +31,8 @@ export const ROUTES = {
   GET_JOB_ID:(id) => `${BASE_API_URL}/job/${id}`,
   DELETE_JOB: (id) => `${BASE_API_URL}/job/${id}`,
 
-
+  //Applicatons
+  GET_ALL_APPLICANT:(id)=>`${BASE_API_URL}/job/${id}/applicants`
 };
 
 export const PATH = {
@@ -47,6 +48,7 @@ export const PATH = {
   //job
   JOB_DESCRIPTION: "/job/description/:id",
   POST_JOB: "/admin/jobs/post",
+  UPDATE_JOB:"/admin/job/update/:id",
 
   //Company
   COMPANY: "/admin/companies",

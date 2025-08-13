@@ -15,6 +15,9 @@ router.get('/:id',Validator.idValidation, Controller.getJobById);
 // Create job
 router.post('/add',verifyToken,roleMiddleware(['recuiter']), Validator.createJobValidator, Controller.createJob);
 
+// Get applicants for a specific job (Admin only)
+router.get("/:jobId/applicants", verifyToken,roleMiddleware(['recuiter']), Controller.getJobApplicants);
+
 // Update job
 router.put('/:id', Controller.updateJob);
 

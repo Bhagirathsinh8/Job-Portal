@@ -48,3 +48,24 @@ exports.getApplicationById = async (req, res, next) => {
 };
 
 
+
+// PATCH /api/applications/:id/status
+exports.updateApplicationStatus = async (req, res,next) => {
+  try {
+    const { id } = req.params; // application ID
+    const { status } = req.body;
+
+    const updatedApplication = await Service.updateApplicationStatusService(id, status);
+
+    return res.status(StatusCodes.OK).json({
+       status: 1,
+       success: true,
+      message: "Status updated successfully",
+      data: updatedApplication,
+    });
+  } catch (error) {
+   return next(error)
+  }
+};
+
+

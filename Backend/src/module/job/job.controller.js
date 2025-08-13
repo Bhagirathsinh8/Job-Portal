@@ -100,3 +100,22 @@ exports.getRecruiterJobs = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
+exports.getJobApplicants = async (req, res,next) => {
+  try {
+    const { jobId } = req.params;
+
+    const result = await jobService.getJobApplicantsService(jobId);
+
+    return res.status(StatusCodes.OK).json({
+      status:status.ONE,
+      success:status.TRUE,
+      message:"Get Job Applicant list Successfully",
+      data:result
+    })
+  } catch (error) {
+      return next(error);
+    }
+};

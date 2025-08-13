@@ -2,6 +2,8 @@ const { StatusCodes } = require("http-status-codes");
 const Job = require("../../model/job.model");
 const Company = require("../../model/company.model");
 const { AppError } = require("../../utils/errorHandler");
+const Application = require("../../model/application.model") ;
+
 
 
 exports.createJob = async (jobData, user) => {
@@ -97,4 +99,20 @@ exports.getJobsByRecruiter = async (recruiterId) => {
     .populate("applications")
     .lean();
   return job;
+};
+
+
+exports.getJobApplicantsService = async (jobId) => {
+  // Check if job exists
+  const job = await Job.findById(jobId);
+  if (!job) {
+    throw new Error("Job not found");
+  }
+
+  // Get all applications for the job
+  const applications = await Application.find({ jobId: jobId })
+  .populate("applicant_id") // populate only specific fields
+  .sort({ createdAt: -1 });
+
+  return applications;
 };

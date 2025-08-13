@@ -25,8 +25,8 @@ function HeroSection() {
             placeholder='Find Your Dream Jobs'
             className='outline-none border-none w-full px-2 py-3 text-sm sm:text-base'
           />
-          <Button className='rounded-r-full bg-[#6A38C2] px-4 py-2'>
-            <Search className='h-5 w-5' />
+          <Button className='rounded-r-full bg-[#6A38C2] px-2 py-3 h-12'>
+            <Search className='h-20 w-10'/>
           </Button>
         </div>
       </div>

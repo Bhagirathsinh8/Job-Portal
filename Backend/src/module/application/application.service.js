@@ -74,3 +74,24 @@ exports.getApplicationById = async (id) => {
 
   return application;
 };
+
+
+exports.updateApplicationStatusService = async (applicationId, status) => {
+  // Allowed statuses
+  const validStatuses = ["pending", "shortlisted", "interview", "hired", "rejected","accepted"];
+  if (!validStatuses.includes(status)) {
+    throw new AppError("Invalid status value",StatusCodes.BAD_REQUEST);
+  }
+
+  const updatedApplication = await Application.findByIdAndUpdate(
+    applicationId,
+    { status },
+    { new: true }
+  );
+
+  if (!updatedApplication) {
+    throw new AppError("Application not found",StatusCodes.BAD_REQUEST);
+  }
+
+  return updatedApplication;
+};

@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Edit2, MoreHorizontalIcon, Trash2 } from "lucide-react";
+import { Edit2, Eye, MoreHorizontalIcon, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -65,6 +65,7 @@ function AdminJobsTable() {
         <TableCaption>List Of Jobs</TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead>Logo</TableHead>
             <TableHead>Company Name</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Location</TableHead>
@@ -88,15 +89,15 @@ function AdminJobsTable() {
           ) : (
             filterJobs.map((item, index) => (
               <TableRow key={index}>
+                <TableCell><img src={item?.company?.logo} className="h-10 w-10 rounded-full border"/> </TableCell>
                 <TableCell>{item?.company?.name}</TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.location}</TableCell>
                 <TableCell>{item.requirement}</TableCell>
-                <TableCell>{item.created_by.name}</TableCell>
                 <TableCell>
                   <Badge variant="ghost">{item.jobType}</Badge>
                 </TableCell>
-
+                <TableCell>{item.created_by.name}</TableCell>
                 <TableCell className="text-right cursor-pointer">
                   <Popover
                     open={openPopoverId === item._id}
@@ -113,7 +114,18 @@ function AdminJobsTable() {
                           <Button
                             variant="ghost"
                             onClick={() =>
-                              navigate(`/admin/companies/${item._id}`)
+                              navigate(`/admin/job/${item._id}/applicant`)
+                            }
+                          >
+                            <span className="font-medium">Applicate</span>
+                            <Eye className="my-2 w-4 text-black" />
+                          </Button>
+                        </div>
+                        <div className="mx-2 flex items-center justify-around">
+                          <Button
+                            variant="ghost"
+                            onClick={() =>
+                              navigate(`/admin/job/update/${item._id}`)
                             }
                           >
                             <span className="font-medium">Edit</span>

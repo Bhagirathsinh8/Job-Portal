@@ -8,6 +8,7 @@ import { PATH } from "@/utils/constant";
 import useGetAllCompany from "@/hooks/useGetAllCompany";
 import { useDispatch } from "react-redux";
 import { setsearchCompanybyText } from "@/redux/companySlice";
+import Footer from "../home/Footer";
 
 function Companies() {
   useGetAllCompany();
@@ -21,16 +22,16 @@ function Companies() {
   }, [search, dispatch]);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 my-6 sm:my-10">
+        {/* Search + Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-5">
           <Input
             className="w-full sm:w-1/2"
             placeholder="Filter the Company"
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Button
             className="w-full sm:w-auto"
@@ -40,8 +41,12 @@ function Companies() {
           </Button>
         </div>
 
-        <CompaniesTable search={search} />
+        {/* Table wrapper for scroll on small screens */}
+        <div className="overflow-x-auto rounded-lg shadow-sm bg-white">
+          <CompaniesTable search={search} />
+        </div>
       </div>
+      <Footer/>
     </div>
   );
 }

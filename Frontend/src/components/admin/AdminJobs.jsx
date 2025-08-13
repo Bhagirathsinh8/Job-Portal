@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import AdminJobsTable from "./AdminJobsTable";
 import useGetAllAdminJobs from "@/hooks/useGetAdminJobs";
 import { setSearchJobsbyText } from "@/redux/jobSlice";
+import Footer from "../home/Footer";
 
 function AdminJobs() {
   useGetAllAdminJobs();
@@ -21,26 +22,31 @@ function AdminJobs() {
   }, [search, dispatch]);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 my-6 sm:my-10">
+        {/* Search + Button Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-5">
           <Input
             className="w-full sm:w-1/2"
             placeholder="Filter the Job"
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Button
             className="w-full sm:w-auto"
             onClick={() => navigate(PATH.POST_JOB)}
           >
-          New Jobs
+            New Job
           </Button>
         </div>
-        <AdminJobsTable/>
+
+        {/* Table with scroll on mobile */}
+        <div className="overflow-x-auto rounded-lg shadow-sm bg-white">
+          <AdminJobsTable />
+        </div>
       </div>
+      <Footer/>
     </div>
   );
 }

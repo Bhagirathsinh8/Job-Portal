@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, setLoading, } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
 import { login } from "@/api/authApi";
+import Footer from "../home/Footer";
 
 function Login() {
   const [input, setInput] = useState({
@@ -55,9 +56,9 @@ function Login() {
     }
   };
 return (
-  <div>
+  <div >
     <Navbar />
-    <div className="flex items-center justify-center px-4 min-h-screen">
+    <div className="flex items-center justify-center px-4 min-h-screen bg-amber-200">
       <form
         className="w-full max-w-md border border-gray-300 rounded-md p-6 my-10 bg-white"
         onSubmit={submitHandler}
@@ -151,9 +152,9 @@ return (
         </p>
       </form>
     </div>
+    <Footer/>
   </div>
 );
-
   // return (
   //   <div>
   //     <Navbar />

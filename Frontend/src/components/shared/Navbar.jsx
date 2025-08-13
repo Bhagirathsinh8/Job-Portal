@@ -198,9 +198,16 @@ function Navbar() {
                   </div>
                 </div>
 
-                <Button variant="link" className="w-full justify-start">
-                  <Link to={PATH.PROFILE}>View Profile</Link>
-                </Button>
+                 {
+                    user && user.role === 'student'&& (
+<div className="flex items-center gap-2 cursor-pointer">
+                    <User2 />
+                    <Button variant="link">
+                      <Link to={PATH.PROFILE}>View Profile</Link>
+                    </Button>
+                  </div>
+                    )
+                  }
                 <Button
                   variant="link"
                   className="w-full justify-start text-red-500"
