@@ -69,3 +69,29 @@ exports.updateApplicationStatus = async (req, res,next) => {
 };
 
 
+
+
+exports.getUserApplications = async (req, res) => {
+  try {
+    const userId = req.user.id; // user extracted from JWT
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const result = await Service.getUserApplications(userId, page, limit);
+
+    return res.status(200).json({
+      success: true,
+      data: result, // applications, total, page, pages
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
+
+

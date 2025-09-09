@@ -1,7 +1,7 @@
-// const BASE_API_URL = "http://localhost:5000/api";
+const BASE_API_URL = "http://localhost:5000/api";
 // const BASE_API_URL = "https://tksf97sz-5000.inc1.devtunnels.ms/api";
 // const BASE_API_URL = "https://job-portal-mrlu.onrender.com/api";
-const BASE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+// const BASE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 
 export const ROUTES = {
@@ -33,7 +33,9 @@ export const ROUTES = {
 
   //Applicatons
   GET_ALL_APPLICANT:(id)=>`${BASE_API_URL}/job/${id}/applicants`,
-  UPDATE_APPLICATION_STATUS: (id) => `${BASE_API_URL}/applications/${id}/status`
+  UPDATE_APPLICATION_STATUS: (id) => `${BASE_API_URL}/applications/${id}/status`,
+  GET_MY_APPLICATIONS: `${BASE_API_URL}/applications/my-applications`,
+
 };
 
 export const PATH = {

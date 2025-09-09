@@ -6,6 +6,8 @@ const { verifyToken, roleMiddleware } = require("../middleware/auth.middleware")
 // Get All Applications
 router.get("/", Controller.getAllApplications);
 
+router.get("/my-applications", verifyToken,roleMiddleware(['student']), Controller.getUserApplications);
+
 // Get Application By ID
 router.get("/:id", Controller.getApplicationById);
 
@@ -20,5 +22,6 @@ router.delete("/delete/:id", Controller.deleteApplication);
 
 //Update Status
 router.patch("/:id/status",verifyToken,roleMiddleware(['recuiter']), Controller.updateApplicationStatus);
+
 
 module.exports = router;

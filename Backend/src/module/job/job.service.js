@@ -8,7 +8,11 @@ const Application = require("../../model/application.model") ;
 
 exports.createJob = async (jobData, user) => {
 
-  const company = await Company.findOne({ ownerId: user.id });
+  // const company = await Company.findOne({ ownerId: user.id });
+  const company = await Company.findOne({
+    _id: jobData.companyId,
+    ownerId: user.id,
+  });
   if (!company) {
     throw new AppError("No company found for this user", StatusCodes.NOT_FOUND);
   }

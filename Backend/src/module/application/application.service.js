@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const Application = require("../../model/application.model");
 const Job = require("../../model/job.model");
 const { AppError } = require("../../utils/errorHandler");
+const { models } = require("../../utils/constant");
 
 exports.createApplication = async (data, user) => {
   const job = await Job.findById(data.jobId);
@@ -94,4 +95,33 @@ exports.updateApplicationStatusService = async (applicationId, status) => {
   }
 
   return updatedApplication;
+};
+
+exports.getUserApplications = async (userId, page = 1, limit = 10) => {
+  const skip = (page - 1) * limit;
+
+  const [applications, total] = await Promise.all([
+    Application.find({ applicant_id: userId }) // use applicant_id from your schema
+      .populate({
+    path: "jobId",
+    populate: {
+      path: "company",
+      model: models.COMPANY,
+      select: "name location website logo", // only return needed fields
+    },
+  })
+      .populate("applicant_id", "name email")      // populate applicant details (optional)
+      
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 }), // latest first
+    Application.countDocuments({ applicant_id: userId })
+  ]);
+
+  return {
+    applications,
+    total,
+    page,
+    pages: Math.ceil(total / limit),
+  };
 };
