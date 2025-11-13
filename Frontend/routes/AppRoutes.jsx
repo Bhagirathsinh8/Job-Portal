@@ -7,7 +7,8 @@ import CompanySetup from "@/components/admin/CompanySetup";
 import PostJob from "@/components/admin/PostJob";
 import Login from "@/components/auth/Login";
 import Signup from "@/components/auth/Signup";
-import Browse from "@/components/browse/Browse";
+import Browse_All_Company from "@/components/browse/Browse_All_Company";
+import Browser from "@/components/browse/Browser";
 import JobDescription from "@/components/job/JobDescription";
 import ProfilePage from "@/components/profile/ProfilePage";
 import Home from "@/pages/Home";
@@ -33,8 +34,12 @@ const appRouter = createBrowserRouter([
     element: <Jobs />,
   },
   {
+    path: PATH.BROWSER_ALL_COMPANY,
+    element: <Browse_All_Company />,
+  },
+  {
     path: PATH.BROWSER,
-    element: <Browse />,
+    element: <Browser />,
   },
   {
     path: PATH.ADMIN_DASHBOARD,

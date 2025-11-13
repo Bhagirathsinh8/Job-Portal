@@ -30,6 +30,7 @@ export const ROUTES = {
   APPLY_JOB :`${BASE_API_URL}/applications/post`,
   GET_JOB_ID:(id) => `${BASE_API_URL}/job/${id}`,
   DELETE_JOB: (id) => `${BASE_API_URL}/job/${id}`,
+  SEARCH_JOB :(search) =>`${BASE_API_URL}/job/?search=${search}`,
 
   //Applicatons
   GET_ALL_APPLICANT:(id)=>`${BASE_API_URL}/job/${id}/applicants`,
@@ -43,6 +44,7 @@ export const PATH = {
   SIGNUP: "/signup",
   LOGIN: "/login",
   JOBS: "/jobs",
+  BROWSER_ALL_COMPANY: "/browser/company",
   BROWSER: "/browser",
   PROFILE: "/profile",
 

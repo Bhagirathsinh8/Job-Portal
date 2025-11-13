@@ -3,12 +3,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import { LogOut, User2, Menu, X } from "lucide-react";
+import { LogOut, User2, Menu, X, MessageCircleMore } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
 import { PATH } from "@/utils/constant";
 import { toast } from "sonner";
+import { Badge } from "../ui/badge";
 
 function Navbar() {
   const { user } = useSelector((store) => store.auth);
@@ -57,7 +58,7 @@ function Navbar() {
                   <Link to={PATH.JOBS}>Jobs</Link>
                 </li>
                 <li>
-                  <Link to={PATH.BROWSER}>Browser</Link>
+                  <Link to={PATH.BROWSER_ALL_COMPANY}>Browser</Link>
                 </li>
               </>
             )}
@@ -73,6 +74,8 @@ function Navbar() {
               </Link>
             </div>
           ) : (
+            <>  
+            <div>
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
@@ -118,6 +121,15 @@ function Navbar() {
                 </div>
               </PopoverContent>
             </Popover>
+            </div>
+             {/* Message Icon with Badge */}
+              <div className="relative cursor-pointer">
+                <MessageCircleMore className="w-6 h-6" />
+                <Badge className="absolute -top-2 -right-1 px-1.5 py-0 text-xs bg-red-500 text-white rounded-full">
+                  3
+                </Badge>
+              </div>
+            </>            
           )}
         </div>
       </div>
@@ -163,7 +175,7 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to={PATH.BROWSER} onClick={() => setMenuOpen(false)}>
+                  <Link to={PATH.BROWSER_ALL_COMPANY} onClick={() => setMenuOpen(false)}>
                     Browser
                   </Link>
                 </li>

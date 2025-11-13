@@ -30,19 +30,28 @@ exports.createJob = async (jobData, user) => {
 };
 
 
+
+
 exports.getAllJobs = async (query) => {
   const filter = {};
 
-  // 🔍 Filtering
-  if (query.title) {
-    filter.title = { $regex: query.title, $options: "i" };
+  // 🔍 General Search (title, company name, location)
+  if (query.search) {
+    const searchRegex = { $regex: query.search, $options: "i" };
+
+    // find companies with matching names
+    const companies = await Company.find({ name: searchRegex }).select("_id");
+
+    filter.$or = [
+      { title: searchRegex },
+      { company: { $in: companies.map((c) => c._id) } },
+      { location: searchRegex },
+    ];
   }
-  if (query.location) {
-    filter.location = { $regex: query.location, $options: "i" };
-  }
-  if (query.type) {
-    filter.type = query.type;
-  }
+
+  // 🎯 Specific filters (optional)
+  if (query.type) filter.type = query.type;
+
   if (query.minSalary && query.maxSalary) {
     filter.salary = { $gte: query.minSalary, $lte: query.maxSalary };
   }
@@ -50,14 +59,14 @@ exports.getAllJobs = async (query) => {
   // ↕️ Sorting
   let sort = {};
   if (query.sortBy) {
-    const sortField = query.sortBy; // e.g., "createdAt"
-    const sortOrder = query.order === "desc" ? -1 : 1; // default: ascending
+    const sortField = query.sortBy;
+    const sortOrder = query.order === "desc" ? -1 : 1;
     sort[sortField] = sortOrder;
   } else {
-    sort = { createdAt: -1 }; // default sorting by newest jobs
+    sort = { createdAt: -1 }; // default sort by newest
   }
 
-  // 📦 Fetch Jobs
+  // 📦 Fetch jobs (if no filters/search — returns all)
   const jobs = await Job.find(filter)
     .sort(sort)
     .populate("company")
@@ -67,6 +76,7 @@ exports.getAllJobs = async (query) => {
 
   return jobs;
 };
+
 
 exports.getJobById = async (id) => {
   const job = await Job.findById(id)

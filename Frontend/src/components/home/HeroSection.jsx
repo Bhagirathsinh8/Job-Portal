@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { Search } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { PATH } from '@/utils/constant';
 
 function HeroSection() {
+ const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim()) {
+       navigate(`${PATH.BROWSER}?search=${search}`);
+    }
+  };
+
   return (
     <div className='text-center my-2'>
       <div className='flex flex-col gap-5 '>
@@ -20,14 +32,19 @@ function HeroSection() {
         </p>
 
         <div className='flex w-full sm:w-4/5 md:w-2/3 lg:w-1/2 shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-2 sm:gap-4 mx-auto bg-white'>
+         <form onSubmit={handleSearch}  className="flex gap-2 w-full">
+
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder='Find Your Dream Jobs'
             className='outline-none border-none w-full px-2 py-3 text-sm sm:text-base'
-          />
+            />
           <Button className='rounded-r-full bg-[#6A38C2] px-2 py-3 h-12'>
             <Search className='h-20 w-10'/>
           </Button>
+            </form>
         </div>
       </div>
     </div>
